@@ -1,9 +1,9 @@
 {
   "name": "github-cli",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0",
+  "description": "Github-CLI is CLI tool which helps you to interact with github through the command line.",
   "main": "index.js",
-  "type": "module", 
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,10 +12,17 @@
     "url": "git+https://github.com/CapedDemon/Github-CLI.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Shreejan Dolai",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/CapedDemon/Github-CLI/issues"
   },
-  "homepage": "https://github.com/CapedDemon/Github-CLI#readme"
+  "homepage": "https://github.com/CapedDemon/Github-CLI",
+  "dependencies": {
+    "chalk": "^5.1.2",
+    "chalk-animation": "^2.0.3",
+    "figlet": "^1.5.2",
+    "inquirer": "^9.1.4",
+    "nanospinner": "^1.1.0"
+  }
 }

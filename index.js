@@ -240,6 +240,17 @@ class GithubCLI {
       }
     } else if (topic == "followers") {
       await this.theSpinner(100, false);
+
+      let finalurl = url + "/followers"
+      const response = await this.fetchFunc(finalurl);
+
+      //printing the name of the followers and link to the github repo
+      for (const i of response)
+      {
+        console.log(`\t${chalk.cyan("login:-----------")}${i["login"]}`);
+        console.log(`\t${chalk.cyan("html_url:--------")}${i["html_url"]}\n`);
+      };
+
     } else {
       await this.theSpinner(100, true, "What to show?");
     }

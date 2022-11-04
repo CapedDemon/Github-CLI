@@ -2,7 +2,7 @@
   "name": "github-cli",
   "version": "1.0",
   "description": "Github-CLI is CLI tool which helps you to interact with github through the command line.",
-  "main": "index.js",
+  "main": "src/index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -27,6 +27,7 @@
     "inquirer": "^9.1.4",
     "nanospinner": "^1.1.0",
     "node-fetch": "^3.2.10",
+    "request": "^2.88.2",
     "terminal-image": "^2.0.0"
   }
 }

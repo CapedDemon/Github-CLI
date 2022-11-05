@@ -12,12 +12,15 @@ import fetch from "node-fetch";
 import Table from "cli-table";
 import got from "got";
 import terminalImage from "terminal-image";
-import pkg from "request";
+import { Octokit } from "@octokit/rest";
 
 class GithubCLI {
   // important variables
   mainUrl = "https://api.github.com/";
   functionMap = {};
+  loggedin = false;
+  userToken = null;
+  mainusername = "";
 
   // timeout function which takes
   // milliseconds according to requirement
@@ -94,7 +97,8 @@ class GithubCLI {
     this.functionMap["about"] = this.about;
     this.functionMap["userinfo"] = this.userinfo;
     this.functionMap["moreuserinfo"] = this.showMoreUserInfo;
-    // this.function["login"] = this.loginFunc;
+    this.functionMap["login"] = this.loginFunc;
+    this.functionMap["logout"] = this.logout;
   };
 
   // function assigning function
@@ -230,14 +234,33 @@ class GithubCLI {
       await this.theSpinner(100, false, `${chalk.red(`\tError Occured`)}`);
     } else {
       await this.theSpinner(100, true, `${chalk.green(`\tUser Found`)}`);
+
+      // list of options to show
+      // if user is not logged in
+      let options1 = ["repositories", "followers", "organizations", "None"];
+
+      //if user is looged in
+      let options2 = [
+        "repositories",
+        "followers",
+        "organizations",
+        "following",
+        "None",
+      ];
+
       const whatToshow = [
         {
           type: "list",
           name: "topic",
           message: "what do you want to see ?\n",
-          choices: ["repositories", "followers", "organizations", "None"],
         },
       ];
+      if (this.loggedin) {
+        whatToshow[0]["choices"] = options2;
+      } else {
+        whatToshow[0]["choices"] = options1;
+      }
+
       const { topic } = await inquirer.prompt(whatToshow);
       if (topic == "repos") {
         let finalurl = url + "/repos";
@@ -302,9 +325,70 @@ class GithubCLI {
       } else if (topic == "Later") {
         await this.theSpinner(100, false, "Mission of showing more aborted.");
       }
+
+      // logged in functionalities
+      if (this.loggedin) {
+        const octokit = new Octokit({
+          auth: this.userToken,
+        });
+        if (topic == "following") {
+          const { data } = await octokit.request(
+            "GET /users/{username}/following",
+            {
+              username: this.mainusername,
+            }
+          );
+          console.log(data);
+        }
+      }
     }
   };
 
+  // login in github
+  loginFunc = async () => {
+    if (!this.loggedin) {
+      const prompt = [
+        {
+          type: "input",
+          name: "token",
+          message:
+            "Please enter your personal token (so that we can authenticate the github activites): ",
+        },
+      ];
+      const { token } = await inquirer.prompt(prompt);
+
+      const prompt2 = [
+        {
+          type: "input",
+          name: "username",
+          message: "Please enter your username: ",
+        },
+      ];
+      const { username } = await inquirer.prompt(prompt2);
+
+      this.userToken = token;
+      this.loggedin = true;
+      this.mainusername = username;
+
+      console.log(`\t${chalk.bgGreen.bold("Successfully logged in")}`);
+    } else {
+      console.log(`\t${chalk.green.bold("You are already logged in.")}`);
+    }
+  };
+
+  // logout
+  logout = async () => {
+    if (this.loggedin) {
+    this.loggedin = false;
+    this.mainusername = "";
+    this.userToken = null;
+    console.log(`\t${chalk.bgRed.bold("Logged Out")}`);
+    }
+    else 
+    {
+      console.log(`\t${chalk.blue("Login first")}`);
+    }
+  };
 
   // taking commands -
   takeCommand = async () => {

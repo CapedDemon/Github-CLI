@@ -1,33 +1,19 @@
-#!/usr/bin/env node
+import GithubCliFunc from "./GithubCliFunc.js";
 
-// importing libraries
-import chalk from "chalk";
-// import inquirer from "inquirer";
-// import gradient from "gradient-string";
-// import chalkAnimation from "chalk-animation";
-// import figlet from "figlet";
-// import * as fs from "fs";
-// import { createSpinner } from "nanospinner";
-// import fetch from "node-fetch";
-// import Table from "cli-table";
-// import got from "got";
-// import terminalImage from "terminal-image";
-// import { Octokit } from "@octokit/rest";
-
-import githubCliFunc from "./githubCliFunc";
-
-class GithubCli {
-    
-    private readonly ApiUrl = "https://api.github.com/";
+export default class GithubCli {
     private UserToken: string = "";
     public UserName: string = "";
-    public LoggedIn: boolean = false;
-    private FunctionMap: object = {};
-    private Functions = new githubCliFunc;
+    private LoggedIn: boolean = false;
+    public MainUrl: string = "https://api.github.com/";
 
-    // declaring the functions
-    TimeOut = this.Functions.TimeOut;
+    // getting all the functions
+    private Functions = new GithubCliFunc;
+
+    // setting the functions in a map
+    private FunctionsMap: object = {
+
+    };
+
+
     Welcome  = this.Functions.Welcome;
 }
-
-export default GithubCli;

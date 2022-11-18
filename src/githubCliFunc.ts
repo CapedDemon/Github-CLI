@@ -1,23 +1,39 @@
-import figlet from "figlet";
 import gradient from "gradient-string";
+import figlet from "figlet";
+import * as fs from "fs";
+import chalk from "../node_modules/chalk/source/index";
 
-class githubCliFunc {
+export default class GithubCliFunc {
 
-    // timout function
-    TimeOut = (millisec: number) => {
+    // timeout function
+    TimeoutFunc = (millisec: number) => {
         new Promise((r) => setTimeout(r, millisec));
-    };
+    }
 
-    
+    // function to load the information about the program
+    GetInfo = () => {
+        let information = fs.readFileSync("package.json", "utf8");
+        return JSON.parse(information);
+    }
 
-    // welcome function
+    // showing our logo
+    ShowLogo = async () => {
+        const Logo = chalk.green(`\t\t      \n\t\t      \n\t\t  GC  \t`);
+        console.log(Logo);
+    }
+
+    // the welcome function
     Welcome = async () => {
-        const msg = `\t\tHello\n`;
-        figlet(msg, (err, data) => {
+        let Info = this.GetInfo();
+
+        var Title: string;
+        Title = `\t\tThe ${Info["name"]}\n` 
+
+        // showing the Title
+        figlet(Title, (err, data) => {
             console.log(gradient.pastel.multiline(data));
         });
-        this.TimeOut(1000);
+        // this.ShowLogo();
+        this.TimeoutFunc(1000);
     }
 }
-
-export default githubCliFunc;

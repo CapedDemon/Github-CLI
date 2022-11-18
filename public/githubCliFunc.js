@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import gradient from "gradient-string";
 import figlet from "figlet";
 import * as fs from "fs";
-import chalk from "../node_modules/chalk/source/index";
+import chalk from "chalk";
 export default class GithubCliFunc {
     constructor() {
         // timeout function
@@ -30,13 +30,12 @@ export default class GithubCliFunc {
         // the welcome function
         this.Welcome = () => __awaiter(this, void 0, void 0, function* () {
             let Info = this.GetInfo();
-            var Title;
-            Title = `\t\tThe ${Info["name"]}\n`;
+            let Title = `\t\tThe ${Info["name"]}\n`;
             // showing the Title
             figlet(Title, (err, data) => {
                 console.log(gradient.pastel.multiline(data));
             });
-            // this.ShowLogo();
+            this.ShowLogo();
             this.TimeoutFunc(1000);
         });
     }

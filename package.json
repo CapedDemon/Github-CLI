@@ -34,6 +34,7 @@
   },
   "devDependencies": {
     "@types/chalk": "^2.2.0",
+    "@types/chalk-animation": "^1.6.1",
     "@types/figlet": "^1.5.5",
     "@types/gradient-string": "^1.1.2",
     "@types/inquirer": "^9.0.3"

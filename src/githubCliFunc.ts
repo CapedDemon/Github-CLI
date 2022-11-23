@@ -42,7 +42,7 @@ export default class GithubCliFunc {
         figlet(Title, (err, data) => {
             console.log(gradient.pastel.multiline(data));
         });
-        this.TimeoutFunc(1000);
+        this.TimeoutFunc(2000);
     }
 
     // ending script
